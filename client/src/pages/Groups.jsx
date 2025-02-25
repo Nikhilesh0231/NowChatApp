@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
-import {Box, Drawer, Grid, IconButton,Stack,TextField,Tooltip, Typography } from "@mui/material"
-import { Done, Edit, KeyboardBackspace, Menu } from "@mui/icons-material"
+import {Box, Button, Drawer, Grid, IconButton,Stack,TextField,Tooltip, Typography } from "@mui/material"
+import { Add, Delete, Done, Edit, KeyboardBackspace, Menu } from "@mui/icons-material"
 import { matBlack } from '../components/constants/color'
 import {useNavigate,useSearchParams} from "react-router-dom"; 
 import {Link} from '../components/styles/StyledComponent'
@@ -17,8 +17,13 @@ function Groups() {
 
 
   const [isMobileMenuOpen,setIsMobileMenuOpen]=useState(false);
+
   const [isEdit,setIsEdit]=useState(false);
+
+  const [confirmDeleteDialog,setConfirmDeleteDialog] = useState(false);
+
   const [groupName,setGroupName]=useState("");
+
   const [groupNameUpdatedValue,setGroupNameUpdatedValue]=useState("");
 
 
@@ -37,6 +42,14 @@ function Groups() {
   const updateGroupName = () => {
     setIsEdit(false); 
     console.log(groupNameUpdatedValue)
+  }
+
+  const confirmDeleteHandler = () => {
+    console.log("Delete Group");
+  }
+
+  const openAddMemberHandler = () => {
+    console.log("Add Member");
   }
 
   useEffect(()=>{
@@ -88,6 +101,11 @@ function Groups() {
       }
     </Stack>
 
+    const ButtonGroup = <Stack direction={{sm:"row",xs:"column-reverse"}} spacing={"1rem"} p={{sm:"1rem",xs:"0",md:"1rem 4rem",}}>
+      <Button onClick={confirmDeleteHandler} startIcon={<Delete/>} size='large' color='error' variant='contained'>Delete Group</Button>
+      <Button onClick={openAddMemberHandler} startIcon={<Add/>} size='large' variant='contained'>Add Member</Button>
+    </Stack>
+
   return (
     <Grid container height={"100vh"}>
       <Grid item sm={4} sx={{display:{xs:"none",sm:"block",},}} bgcolor={"bisque"}>
@@ -96,7 +114,16 @@ function Groups() {
       <Grid item xs={12} sm={8} sx={{display:"flex",flexDirection:"column",alignItems:"center",position:"relative",padding:"1rem 3rem",}}>
           {IconBtns}
 
-          {groupName &&  GroupName}
+          {groupName && ( <>
+            {GroupName}
+            <Typography margin={"2rem"} alignSelf={"flex-start"} variant='body1'>Members</Typography>
+            <Stack maxWidth={"45rem"} width={"100%"} boxSizing={"border-box"} padding={{sm:"1rem",xs:"0",md:"1rem 4rem"}} spacing={"2rem"} bgcolor={"bisque"} height={"50vh"} overflow={"auto"}>
+              {/* Members */}
+            </Stack>
+
+            {ButtonGroup}
+
+          </>)}
       </Grid>
       <Drawer sx={{
         display:{ 
