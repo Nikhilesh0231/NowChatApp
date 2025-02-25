@@ -5,6 +5,13 @@ import { grayColor, orange } from '../components/constants/color';
 import { AttachFile, Send } from '@mui/icons-material';
 import { InputBox } from '../components/styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
+import { sampleMessage } from '../components/constants/sampleData';
+import MessageComponent from '../components/shared/MessageComponent';
+
+const user = {
+  _id: "kjhdsjfsa",
+  name:"Abi",
+}
 
 function Chat() {
 
@@ -12,8 +19,10 @@ function Chat() {
 
   return (
     <>
-      <Stack ref={containerRef} boxSizing={"border-box"} padding={"1rem"} spacing={"1rem"} bgcolor={grayColor}height={"90%"} sx={{overflowX:"hidden",overflowY:"auto"}}>
-        {/* MessageRender */} 
+      <Stack ref={containerRef} boxSizing={"border-box"} padding={"1rem"} spacing={"1rem"} bgcolor={grayColor}height={"90%"} sx={{overflowX:"hidden",overflowY:"auto"}}> 
+        {
+          sampleMessage.map((i)=>(<MessageComponent key={i._id} message={i} user={user}/>))
+        } 
       </Stack>
       <form style={{height:"10%"}}>
         <Stack direction={"row"} height={"100%"} padding={"0.75rem"} alignItems={"center"} position={"relative"}>
