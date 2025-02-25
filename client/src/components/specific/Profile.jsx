@@ -25,7 +25,7 @@ alignItems={"center"} spacing={"1rem"} color={"white"} textAlign={"center"}>
   {Icon && Icon}
   <Stack>
     <Typography variant="body1">{text}</Typography> 
-    <Typography color={"gray"} variant="caption">{heading}</Typography> 
+    <Typography color={"white"} variant="caption">{heading}</Typography> 
   </Stack>
 </Stack>
 

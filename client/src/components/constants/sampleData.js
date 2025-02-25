@@ -5,11 +5,92 @@ export const sampleChats =[
   _id:"1",
   groupChat:false,
   members:["1","2"],
- },
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"2",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"3",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"4",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"5",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"6",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"7",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"8",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"9",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"10",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
+  {
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:"John Doe",
+  _id:"11",
+  groupChat:false,
+  members:["1","2"],
+ }
+ ,
  {
   avatar:["https://www.w3schools.com/howto/img_avatar.png","https://www.w3schools.com/howto/img_avatar.png","https://www.w3schools.com/howto/img_avatar.png","https://www.w3schools.com/howto/img_avatar.png"],
   name:"John Boi",
-  _id:"2",
+  _id:"12",
   groupChat:true,
   members:["1","2"],
  }

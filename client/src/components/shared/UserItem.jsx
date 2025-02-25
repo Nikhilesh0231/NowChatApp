@@ -2,11 +2,11 @@ import { Add, Remove } from '@mui/icons-material';
 import { Avatar, IconButton, ListItem, Stack, Typography } from '@mui/material';
 import React, { memo } from 'react'
 
-const UserItem = ({user,handler,handlerIsLoading}) => {
-  const {name,_id,avatar,isAdded} = user;
+const UserItem = ({user,handler,handlerIsLoading,isAdded = false,styling={}, }) => {
+  const {name,_id,avatar} = user;
   return (
     <ListItem>
-      <Stack direction={"row"} alignItems={"center"} spacing={"1rem"} width={"100%"} >
+      <Stack direction={"row"} alignItems={"center"} spacing={"1rem"} width={"100%"} {...styling}>
         <Avatar/>
         <Typography variant='body1' sx={{
           flexGrow:1,
@@ -33,4 +33,4 @@ const UserItem = ({user,handler,handlerIsLoading}) => {
   )
 } 
        
-export default memo(UserItem)
+export default memo(UserItem);

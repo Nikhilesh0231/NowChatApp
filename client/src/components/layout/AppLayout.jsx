@@ -6,6 +6,7 @@ import ChatList from '../specific/ChatList'
 import { sampleChats } from '../constants/sampleData'
 import { useParams } from 'react-router-dom'
 import Profile from '../specific/Profile'
+import { bgGradient1 } from '../constants/color'
 
 const AppLayout = () =>(WrappedComponent)=> {
   return (props)=>{
@@ -37,7 +38,8 @@ const AppLayout = () =>(WrappedComponent)=> {
         <Grid item md={4} lg={3} sx={{
           display:{xs:"none" ,md:"block"},
           padding:"2rem",
-          backgroundColor:"rgba(0,0,0,0.85)",
+          // backgroundColor:"rgba(0,0,0,0.85)",
+          backgroundImage:bgGradient1,
         }} height={"100%"}>
           <Profile/>
         </Grid>
