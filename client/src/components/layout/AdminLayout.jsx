@@ -1,19 +1,18 @@
 import { Box, Drawer, Grid, IconButton, Stack, styled, Typography } from '@mui/material';
-import { Close, Groups, ManageAccounts, Menu, Message } from '@mui/icons-material';
+import { Close, ExitToApp, Groups, ManageAccounts, Menu, Message } from '@mui/icons-material';
 import React, { useState } from 'react'
 import { bgGradient1 } from '../constants/color';
-import { useLocation , Link as LinkComponent} from 'react-router-dom';
+import { useLocation , Link as LinkComponent, Navigate} from 'react-router-dom';
 import { Dashboard } from "@mui/icons-material";
 
 const Link = styled(LinkComponent)`
 text-decoration:none;
 border-radius:2rem;
-padding:1rem 2rem;
+padding:0.8rem 2rem;
 color:white;
 &:hover{
 color:rgbe(0,0,0,0.54);
 }`;
-
 
 
 const adminTabs = [
@@ -24,12 +23,12 @@ const adminTabs = [
 },
   {
   name:"Users",
-  path:"/admin/users-management",
+  path:"/admin/users",
   icon:<ManageAccounts/>
 },
   {
   name:"Chats",
-  path:"/admin/chats-management",
+  path:"/admin/chats",
   icon:<Groups/>
 },
   {
@@ -39,6 +38,8 @@ const adminTabs = [
 },
 
 ]
+ 
+const isAdmin = true;
 
 const AdminLayout = ({children}) => {
 
@@ -47,6 +48,8 @@ const AdminLayout = ({children}) => {
   const handleMobile = () => setIsMobile(!isMobile);
 
   const handleClose = () => setIsMobile(false);
+
+  if(!isAdmin) return <Navigate to={"/admin"}/> 
 
   return (
     <Grid container minHeight={"100vh"}>
@@ -73,21 +76,32 @@ const AdminLayout = ({children}) => {
 
 const SideBar = ({w="100%"}) => {
   const location = useLocation();
+
+  const logoutHandler = () => {
+    console.log("logout");
+  };
+
   return <Stack width={w} direction={"column"} spacing={"3rem"}>
-    <Typography textAlign={"center"} variant='h5' textTransform={"uppercase"}>
+    <Typography fontSize={"1.5rem"} fontWeight={"600"} paddingTop={"1rem"} boxShadow={"2px 2px 6px red"} textAlign={"center"} variant='h5' textTransform={"uppercase"}>
       NowChatApp
     </Typography>
-    <Stack spacing={"1rem"}>
+    <Stack padding={"1rem"} spacing={"1rem"}>
       {   
         adminTabs.map((tab)=>(
           <Link key={tab.path} to={tab.path} sx={location.pathname === tab.path && {backgroundColor:"white",color:"red",":hover":{color:"red"},}}>
             <Stack  color={""} direction={"row"} alignItems={"center"} spacing={"1rem"}>
               {tab.icon}
-              <Typography variant={"body1"}>{tab.name}</Typography>
+              <Typography fontSize={"1.3rem"} variant={"body1"}>{tab.name}</Typography>
             </Stack>
           </Link>
         ))
       }
+      <Link onClick={logoutHandler}>
+            <Stack  color={""} direction={"row"} alignItems={"center"} spacing={"1rem"}>
+              {<ExitToApp/>}
+              <Typography fontSize={"1.3rem"} variant={"body1"}>Logout</Typography>
+            </Stack>
+      </Link>
     </Stack>
   </Stack>
 }
