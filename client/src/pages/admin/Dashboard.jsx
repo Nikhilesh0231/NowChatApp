@@ -40,14 +40,14 @@ const Dashboard = () => {
     <AdminLayout>
       <Container component={"main"}>
         {Appbar}
-        <Stack direction={"row"} spacing={"2rem"} flexWrap={"wrap"}>
-          <Paper elevation={3} sx={{padding:"2rem 3.5rem",borderRadius:"1rem",width:"100%",maxWidth:"45rem",height:"25rem"}}>
+        <Stack direction={{xs:"column",xl:"row"}} spacing={"1rem"} flexWrap={"wrap"} justifyContent={"center"} alignItems={{xs:"center",lg:"stretch",}}>
+          <Paper elevation={3} sx={{padding:"2rem 3.5rem",borderRadius:"1rem",width:"100%",maxWidth:"45rem",}}>
             <Typography margin={"2rem 0rem"} variant='h4'>Last Messages</Typography>
-            <LineChart/>
+            <LineChart value={[23,32,32,32,53,11,12]}/>
           </Paper>
 
-          <Paper elevation={3} sx={{padding:"1rem",borderRadius:"1rem",display:"flex",justifyContent:"center",alignItems:"center",width:{xs:"100%",sm:"50%",},position:"relative",width:"100%",maxWidth:"25rem",height:"25rem"}}>
-            <DoughnutChart/>
+          <Paper elevation={3} sx={{padding:"1rem",borderRadius:"1rem",display:"flex",justifyContent:"center",alignItems:"center",width:{xs:"100%",sm:"50%",},position:"relative",width:"100%",maxWidth:"25rem",}}>
+            <DoughnutChart labels={["Single Chats","Group Chats"]} value={[23,66]} />
             <Stack position={"absolute"} direction={"row"} justifyContent={"center"} alignItems={"center"} spacing={"1rem"} width={"100%"} height={"100%"}>
               <Group/> <Typography>Vs</Typography> <Person/>
             </Stack> 

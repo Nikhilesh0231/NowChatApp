@@ -1,64 +1,101 @@
-import React from 'react';
-import {Line , Doughnut} from 'react-chartjs-2';
-import {CategoryScale,Tooltip,Filler,LinearScale,PointElement,LineElement,ArcElement,Legend, Chart as chartJS} from 'chart.js';
+import React from "react";
+import { Line, Doughnut } from "react-chartjs-2";
+import {
+  CategoryScale,
+  Tooltip,
+  Filler,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Legend,
+  Chart as chartJS,
+} from "chart.js";
+import { lightPink, pink, orange } from "../constants/color";
+import { getLast7Days } from "../../lib/features";
 
-chartJS.register(CategoryScale,Tooltip,Filler,LinearScale,PointElement,LineElement,ArcElement,Legend);
+chartJS.register(
+  CategoryScale,
+  Tooltip,
+  Filler,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Legend
+);
 
-const lineChartOptions ={
+const labels = getLast7Days();
+
+const lineChartOptions = {
   responsive: true,
   plugins: {
     legend: {
-      display:false,
+      display: false,
     },
     title: {
       display: false,
     },
   },
-  scales:{
-    x:{
-      grid:{
-        display:false,
+  scales: {
+    x: {
+      grid: {
+        display: false,
       },
       // display:false,
     },
-    y:{
-      beginAtZero:true,
-      grid:{
-        display:false,
+    y: {
+      beginAtZero: true,
+      grid: {
+        display: false,
       },
-      // display:false, 
+      // display:false,
     },
-  }
-}; 
+  },
+};
 
-const LineChart = () => {
+const LineChart = ({ value = [] }) => {
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
+    labels,
     datasets: [
       {
-      data:[1,5,39,24],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      fill:false,
-      label:"Revenue",
-    },
-      {
-      data:[11,52,9,84],
-      backgroundColor: 'rgba(25, 99, 132, 0.2)',
-      borderColor: 'rgba(55, 99, 132, 1)',
-      fill:false,
-      label:"Revenue2",
-    },
-  ],
+        data: value,
+        backgroundColor: pink,
+        borderColor: lightPink,
+        fill: true,
+        label: "Revenue",
+      },
+    ],
   };
-  return (
-   <Line data={data} options={lineChartOptions}/>
-  )
-}
-const DoughnutChart = () => {
-  return (
-    <div>DoughnutCharts</div>
-  )
-}
+  return <Line data={data} options={lineChartOptions} />;
+};
+const doughnutChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+    },
+  },
+  cutout:110,
+};
 
-export  {LineChart,DoughnutChart} 
+const DoughnutChart = ({ value = [], labels = [] }) => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        data: value,
+        backgroundColor: [pink, lightPink],
+        borderColor: [orange, orange],
+        hoverBackgroundColor:[orange,orange],
+        offset:20,
+      },
+    ],
+  };
+  return <Doughnut style={{zIndex:10}} data={data} options={doughnutChartOptions} />;
+};
+
+export { LineChart, DoughnutChart}; 
