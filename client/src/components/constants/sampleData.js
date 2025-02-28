@@ -200,6 +200,37 @@ export const dashboardData = {
       avatar:["https://www.w3schools.com/howto/img_avatar.png"],
       },
     },
+  ],
+  messages:[
+    {
+      attachments:[],
+      content:"message aya",
+      _id:"ksnjdlkadj",
+      sender:{
+        avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+        name:"Chaman",
+      },
+      chat:"chatId",
+      groupChat:false,
+      createdAt:"2025-02-28T12:51:40.630Z",
+    },
+    {
+      attachments:[
+        {
+          public_id:"akdhlkjsa 2",
+          url:"https://www.w3schools.com/howto/img_avatar.png",
+        },
+      ],
+      content:"message aya1",
+      _id:"ksnjdlkadjzxcxz",
+      sender:{
+        avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+        name:"Chaman 2",
+      },
+      chat:"chatId",
+      groupChat:true,
+      createdAt:"2025-02-28T12:51:40.630Z",
+    },
   ]
 }
 
