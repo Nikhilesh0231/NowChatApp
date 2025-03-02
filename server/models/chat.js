@@ -1,4 +1,6 @@
-import { Schema, Types, model, models } from 'mongoose'
+import { Schema, Types, model, } from 'mongoose'
+import models from 'mongoose';
+
 
 const schema = new Schema({
   name: {
