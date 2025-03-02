@@ -7,4 +7,7 @@ const app = express.Router();
 app.post("/new",singleAvatar,newUser);
 app.post("/login",login);
 
+//After here user must be logged in to access the routes
+ 
+
 export default app; 
