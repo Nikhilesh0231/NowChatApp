@@ -35,6 +35,14 @@ const login = TryCatch(async (req, res ,next) => {
 
 });
 
-const getMyProfile = (req, res) => {};
+const getMyProfile = TryCatch(async(req, res) => {
 
-export { login, newUser,getMyProfile };
+  const user = await User.findById(req.user); 
+
+  res.status(200).json({
+    success:true,
+    user,
+  });
+});
+
+export { login, newUser , getMyProfile };
