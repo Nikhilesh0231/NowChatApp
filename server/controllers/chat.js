@@ -1,7 +1,7 @@
 import { TryCatch } from '../middlewares/error.js';
 import { ErrorHandler } from '../utils/utility.js';
 import { Chat } from '../models/chat.js';
-import { emitEvent } from '../utils/features.js';
+import { deleteFilesFromCloudinary, emitEvent } from '../utils/features.js';
 import { ALERT, NEW_ATTACHMENT, NEW_MESSAGE_ALERT, REFETCH_CHATS } from '../constants/events.js';
 import { getOtherMember } from '../lib/helper.js';
 import {User} from '../models/user.js'
@@ -304,8 +304,17 @@ const deleteChat = TryCatch(async(req,res,next)=>{
   messagesWithAttachments.forEach(({attachments}) => attachments.forEach(({public_id}) => public_ids.push(public_id)));
 
   await Promise.all([
-      
-  ])
+      deleteFilesFromCloudinary(public_ids),
+      Message.deleteMany({chat: chatId}),
+      chat.deleteOne(),
+  ]);
+
+  emitEvent(req,REFETCH_CHATS,members);
+
+  return res.status(200).json({
+    success:true,
+    message:"Chat deleted successfully",
+    });  
 
 })
 

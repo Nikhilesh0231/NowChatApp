@@ -16,7 +16,7 @@ app.put("/addmembers",addMembers);
 app.put("/removemember",removeMember);
 app.delete("/leave/:id",leaveGroup);
 app.post("/message",attachmentsMulter,sendAttachments);
-
+//GetMessageApi
 app.route("/:id").get(getChatDetails).put(renameGroup).delete(deleteChat);
 
 
