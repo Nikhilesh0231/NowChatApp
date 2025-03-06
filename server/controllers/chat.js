@@ -113,6 +113,7 @@ const addMembers = TryCatch(async (req, res, next) => {
     message:"Members added successfully",
   });
 });
+
 const removeMember = TryCatch(async (req, res, next) => {
   const { chatId, userId } = req.body;
   const [chat,userThatWillBeRemoved] = await Promise.all([
@@ -148,6 +149,7 @@ const removeMember = TryCatch(async (req, res, next) => {
     message: "Member removed successfully",
   });
 });
+
 const leaveGroup = TryCatch(async (req, res, next) => {
   const chatId = req.params.id;
   const chat = await Chat.findById(chatId);
