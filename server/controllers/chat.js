@@ -152,7 +152,9 @@ const removeMember = TryCatch(async (req, res, next) => {
 
 const leaveGroup = TryCatch(async (req, res, next) => {
   const chatId = req.params.id;
+  // console.log(chatId)
   const chat = await Chat.findById(chatId);
+  // console.log(chat)
   if(!chat) return next(new ErrorHandler("Chat not found", 404));
 
   if(!chat.groupChat) return next(new ErrorHandler("This is not a group chat",400));
@@ -171,10 +173,10 @@ const leaveGroup = TryCatch(async (req, res, next) => {
 
   chat.members = remaningMembers;
 
-  const [user] = await Promise.all(User.findById(req.user,"name"),chat.save());
+  const [user] = await Promise.all([User.findById(req.user,"name"),chat.save()]);
 
-  emitEvent(
-    req,
+  emitEvent(  
+    req,        
     ALERT,
     chat.members,
     `User ${user.name} has left the group`
