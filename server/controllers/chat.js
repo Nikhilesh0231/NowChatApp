@@ -225,12 +225,88 @@ const sendAttachments = TryCatch(async(req,res,next)=>{
 const getChatDetails = TryCatch(async(req,res,next) => {
 
   if(req.query.populate === "true"){
-
-  }else{
+    const chat = await Chat.findById(req.params.id).populate("members","name avatar").lean();
     
+    if(!chat) return next(new ErrorHandler("Chat not found",404));
+    
+    console.log(chat.members)  
+    chat.members = chat.members.map(({_id,name,avatar})=>(
+      {
+        _id,
+        name,
+        avatar:avatar.url,
+      }
+    ));
+    return res.status(200).json({
+      success:true,
+      chat,
+    });
+  }else{
+    const chat = await Chat.findById(req.params.id);
+    if(!chat) return next(new ErrorHandler("Chat not found",404));
+
+    // console.log(chat.members)
+    return res.status(200).json({
+      success:true,
+      chat,
+    });  
   }
 
 })
 
+const renameGroup = TryCatch(async(req,res,next) => {
+  const chatId = req.params.id;
+  const { name } = req.body;
 
-export { newGroupChat, getMyChats, getMyGroups,addMembers,removeMember,leaveGroup,sendAttachments,getChatDetails};
+  const chat = await Chat.findById(chatId);
+  console.log(chat)
+  if(!chat) return next(new ErrorHandler("Chat not found",404));
+
+  if(!chat.groupChat) return next(new ErrorHandler("This is not a group chat",400));
+
+  if(chat.creator.toString() !== req.user.toString())
+    return next(new ErrorHandler("You are not allowed to rename the group",403));
+
+  chat.name = name;
+
+  await chat.save();
+
+  emitEvent(req,REFETCH_CHATS,chat.members);
+
+  return res.status(200).json({
+    success:true,
+    message:"Group renamed successfully",
+  });
+});
+
+const deleteChat = TryCatch(async(req,res,next)=>{
+  const chatId = req.params.id;
+  const chat = await Chat.findById(chatId);
+
+  if(!chat) return next(new ErrorHandler("Chat not found",404));
+
+  const members = chat.members;
+
+  if(chat.groupChat && chat.creator.toString() !== req.user.toString()) return next(new ErrorHandler("You are not allowed to delete the group",403));
+
+  if(!chat.groupChat && !chat.members.includes(req.user.toString()))
+    return next(new ErrorHandler("You are not allowed to delete the chat",403));
+
+  //Here we have to delete all messages as well as attachments from cloudinary
+
+  const messagesWithAttachments = await Message.find({
+    chatId: chatId,
+    attachments: {$exists : true, $ne : [] },
+  });
+
+  const public_ids = [];
+
+  messagesWithAttachments.forEach(({attachments}) => attachments.forEach(({public_id}) => public_ids.push(public_id)));
+
+  await Promise.all([
+      
+  ])
+
+})
+
+export { newGroupChat, getMyChats, getMyGroups,addMembers,removeMember,leaveGroup,sendAttachments,getChatDetails,renameGroup,deleteChat};

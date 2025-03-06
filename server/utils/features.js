@@ -32,5 +32,7 @@ const emitEvent = (req,event,users,data) => {
   console.log("Emmiting event",event);  
   }
 
+  
+
 // export the functions
 export { connectDB, sendToken ,cookieOptions,emitEvent };
