@@ -29,5 +29,10 @@ const newGroupChatValidator = () => [
   body("members").notEmpty().withMessage("Please enter members").isArray({min:2,max:100}).withMessage("Members must be 2-100"),
 ];
 
+const addMemberValidator = () => [
+  body("chatId","Please enter chatId ").notEmpty(),
+  body("members").notEmpty().withMessage("Please enter members").isArray({min:1,max:97}).withMessage("Members must be 1-97"),
+];
 
-export {registerValidator,validateHandler,loginValidator,newGroupChatValidator};
+
+export {registerValidator,validateHandler,loginValidator,newGroupChatValidator,addMemberValidator};
