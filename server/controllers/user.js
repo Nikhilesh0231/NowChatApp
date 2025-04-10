@@ -1,8 +1,14 @@
 import { compare } from 'bcrypt';
 import { User } from '../models/user.js';
-import { cookieOptions, sendToken } from '../utils/features.js';
+import { Chat } from '../models/chat.js'
+import { cookieOptions, emitEvent, sendToken } from '../utils/features.js';
 import { TryCatch } from '../middlewares/error.js';
 import { ErrorHandler } from '../utils/utility.js';
+import { Request } from '../models/request.js'
+import { NEW_REQUEST } from '../constants/events.js';
+
+
+
 //create a new user and save it to the database and save in cookie
 const newUser = async (req, res) => {
   const { name, username, password, bio } = req.body;
@@ -53,12 +59,54 @@ const logout = TryCatch(async(req, res) => {
 });
 
 const searchUser = TryCatch(async(req,res)=>{
-  const {name} = req.query;
+  const {name = ""} = req.query;
+
+  const myChats = await Chat.find({groupChat : false , members : req.user});
+  
+  //All user from my Chats means Friends and Also Including me
+  // const allUserFromMyChat = myChats.map((chat) => chat.members).flat();
+  const allUserFromMyChat = myChats.flatMap((chat) => chat.members);
+
+  const allUserExceptMeAndFriends = await User.find({
+    _id:{$nin : allUserFromMyChat },
+    name : {$regex : name , $options : "i" },
+  })
+
+  const users = allUserExceptMeAndFriends.map((_id,name,avatar)=>({_id,name,avatar:avatar.url}))
   
   return res.status(200).json({
     success:true,
-    message:name, 
+    // message:name, 
+    // myChats,
+    // allUserFromMyChat,
+    // allUserExceptMeAndFriends, 
+    users,
   })
 });
 
-export { login, newUser , getMyProfile , logout , searchUser };  
+const sendrequest = TryCatch(async(req, res) => {
+  const { userId } = req.body;
+
+  const request = await Request.findOne({
+    $or:[
+        {sender:req.user,reciver:userId},
+        {receiver: req.user, sender: userId},
+    ],
+  });
+
+  if(request) return next(new ErrorHandler("Request already sent",400));
+
+  await Request.create({
+    sender:req.user,
+    receiver:userId,  
+  });
+
+  emitEvent(req,NEW_REQUEST,[userId]);
+
+  return res.status(200).json({
+    success:true,
+    message:"Friend Request Send" ,
+  });
+});
+
+export { login, newUser , getMyProfile , logout , searchUser ,sendrequest};  

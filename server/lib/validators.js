@@ -65,5 +65,9 @@ const deleteChatValidator = () => [
   param("Id","Please enter chat Id ").notEmpty(),
 ];
 
+const sendRequestValidator = () => [
+  body("userId","Please enter user Id").notEmpty(),
+];
 
-export {registerValidator,validateHandler,loginValidator,newGroupChatValidator,addMemberValidator,removeMemberValidator,leaveGroupValidator,sendAttachmentValidator,getMessageValidator,getChatDetialsValidator,renameGroupValidator,deleteChatValidator};
+
+export {registerValidator,validateHandler,loginValidator,newGroupChatValidator,addMemberValidator,removeMemberValidator,leaveGroupValidator,sendAttachmentValidator,getMessageValidator,getChatDetialsValidator,renameGroupValidator,deleteChatValidator,sendRequestValidator};
